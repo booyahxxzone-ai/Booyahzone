@@ -2,349 +2,332 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booyah Zone | Elite Tournament Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Booyah Zone | Official Tournament Arena</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #ff9100; /* Orange */
-            --secondary: #ffdb00; /* Yellow */
-            --bg: #ffffff;
-            --text-dark: #121212;
+            --primary: #ff9100;
+            --secondary: #ffdb00;
             --grad: linear-gradient(135deg, #ff9100 0%, #ffdb00 100%);
+            --bg: #ffffff;
+            --text-main: #121212;
+            --text-grey: #666;
+            --glass: rgba(255, 255, 255, 0.95);
         }
 
+        /* --- GLOBAL RESET --- */
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            /* Blue highlight hatane ke liye */
+            margin: 0; padding: 0; box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
             outline: none;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text-dark);
+            background: var(--bg);
+            color: var(--text-main);
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
-            position: relative;
+            line-height: 1.6;
         }
 
-        /* --- BACKGROUND DOODLES --- */
-        .doodle-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none;
+        /* --- BACKGROUND DOODLE ANIMATIONS --- */
+        .doodle-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; opacity: 0.12;
         }
 
         .doodle {
-            position: absolute;
-            color: rgba(255, 145, 0, 0.15); /* Light Orange Shade */
-            font-size: 50px;
-            animation: float 12s infinite linear;
+            position: absolute; color: var(--primary); font-size: 50px;
+            animation: floating 15s infinite linear;
         }
 
-        @keyframes float {
+        @keyframes floating {
             0% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(30px, 50px) rotate(180deg); }
+            33% { transform: translate(50px, 100px) rotate(120deg); }
+            66% { transform: translate(-30px, 50px) rotate(240deg); }
             100% { transform: translate(0, 0) rotate(360deg); }
         }
 
+        /* --- SIDE MENU (HAMBURGER PANEL) --- */
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
+            z-index: 1500; display: none;
+        }
+
+        .side-panel {
+            position: fixed; top: 0; right: -100%; width: 320px; height: 100%;
+            background: white; z-index: 2000; transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            padding: 40px 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            display: flex; flex-direction: column;
+        }
+
+        .side-panel.active { right: 0; }
+        .menu-overlay.active { display: block; }
+
+        .close-btn { align-self: flex-end; font-size: 30px; color: var(--primary); cursor: pointer; }
+
+        .menu-section-title {
+            font-family: 'Orbitron'; font-size: 12px; color: #aaa;
+            margin: 25px 0 10px; text-transform: uppercase; letter-spacing: 2px;
+        }
+
+        .menu-item {
+            padding: 15px; border-radius: 10px; text-decoration: none;
+            color: var(--text-main); font-weight: 600; display: block;
+            transition: 0.2s; border-bottom: 1px solid #f0f0f0;
+        }
+
+        .menu-item:active { background: #fff8eb; color: var(--primary); transform: translateX(10px); }
+
+        .contact-box {
+            margin-top: 30px; background: #f9f9f9; padding: 20px; border-radius: 15px;
+        }
+
+        .support-link {
+            display: flex; align-items: center; gap: 12px; padding: 12px;
+            border-radius: 8px; text-decoration: none; color: white;
+            font-weight: bold; margin-bottom: 10px; transition: 0.3s;
+        }
+        .wa-link { background: #25D366; }
+        .tg-link { background: #0088cc; }
+        .support-link:active { transform: scale(0.95); }
+
         /* --- NAVIGATION --- */
         nav {
-            height: 85px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 6%;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(15px);
-            border-bottom: 2px solid #f0f0f0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            height: 85px; display: flex; justify-content: space-between; align-items: center;
+            padding: 0 6%; background: var(--glass); backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid #f5f5f5;
         }
 
-        .logo-box {
-            display: flex;
-            align-items: center;
+        .nav-logo img {
+            height: 60px; width: 60px; border-radius: 50%;
+            border: 3px solid var(--primary); box-shadow: 0 0 15px rgba(255,145,0,0.2);
         }
 
-        .logo-box img {
-            height: 60px;
-            width: 60px;
-            border-radius: 50%;
-            border: 3px solid var(--primary);
-            box-shadow: 0 0 15px rgba(255, 145, 0, 0.3);
+        .nav-btns { display: flex; align-items: center; gap: 20px; }
+
+        .btn-app {
+            background: var(--grad); color: black; padding: 12px 24px;
+            border-radius: 10px; font-family: 'Orbitron'; font-weight: 900;
+            text-decoration: none; font-size: 12px; box-shadow: 0 5px 15px rgba(255,145,0,0.3);
         }
 
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .get-app-btn {
-            background: var(--grad);
-            color: black;
-            padding: 12px 25px;
-            border-radius: 12px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 13px;
-            text-decoration: none;
-            box-shadow: 0 4px 15px rgba(255, 145, 0, 0.3);
-            transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Click Effect - No Blue Highlight */
-        .get-app-btn:active {
-            transform: scale(0.92);
-            box-shadow: 0 2px 5px rgba(255, 145, 0, 0.2);
-        }
-
-        .hamburger {
-            font-size: 28px;
-            color: var(--primary);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .hamburger:active { transform: scale(0.8); }
+        .hamburger-icon { font-size: 28px; color: var(--primary); cursor: pointer; }
 
         /* --- HERO SECTION --- */
-        .hero {
-            padding: 80px 20px 40px;
-            text-align: center;
-        }
+        .hero { padding: 80px 20px 40px; text-align: center; }
 
         .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            margin: 0;
-            background: var(--grad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 10px;
-            text-transform: uppercase;
+            font-family: 'Orbitron'; font-size: clamp(2.5rem, 10vw, 4.5rem);
+            background: var(--grad); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; letter-spacing: 8px; margin: 0;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: #666;
-            letter-spacing: 4px;
-            margin-top: 15px;
-            text-transform: uppercase;
+            font-size: 1.1rem; color: var(--text-grey); letter-spacing: 3px;
+            text-transform: uppercase; margin-top: 10px; font-weight: 500;
         }
 
-        /* --- WORKING FEATURES --- */
-        .container {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            padding: 40px 6%;
-            flex-wrap: wrap;
+        /* --- POLICY & CONTENT SECTION --- */
+        .main-content { max-width: 1000px; margin: 0 auto; padding: 40px 6%; }
+
+        .section-card {
+            background: #fffdf7; border-left: 6px solid var(--primary);
+            padding: 35px; border-radius: 15px; margin-bottom: 35px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.04);
         }
 
-        .card {
-            background: #ffffff;
-            border: 1px solid #f0f0f0;
-            padding: 40px 30px;
-            border-radius: 20px;
-            width: 350px;
-            text-align: center;
-            transition: 0.3s;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            cursor: pointer;
+        .section-card h2 {
+            font-family: 'Orbitron'; color: var(--primary); margin-bottom: 20px;
+            font-size: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 10px;
         }
 
-        .card:active {
-            transform: scale(0.96);
-            border-color: var(--primary);
+        .policy-list { list-style: none; }
+        .policy-list li {
+            position: relative; padding-left: 30px; margin-bottom: 15px;
+            font-size: 15px; color: #444; line-height: 1.8;
         }
 
-        .card i {
-            font-size: 45px;
-            color: var(--primary);
-            margin-bottom: 25px;
-            display: block;
+        .policy-list li::before {
+            content: "\f135"; font-family: "Font Awesome 6 Free"; font-weight: 900;
+            position: absolute; left: 0; color: var(--primary); font-size: 18px;
         }
 
-        .card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.4rem;
-            margin-bottom: 15px;
+        .warning-box {
+            background: #fff0f0; border: 1px dashed #ff4d4d; color: #cc0000;
+            padding: 15px; border-radius: 8px; font-weight: bold; font-size: 14px;
+            margin-top: 20px; text-align: center;
         }
 
-        .card p {
-            color: #777;
-            line-height: 1.6;
-            font-size: 1rem;
+        /* --- ACTION BOXES --- */
+        .grid-features {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px; margin-bottom: 60px;
         }
 
-        /* --- MASSIVE DOWNLOAD BAR --- */
-        .mega-bar {
-            margin: 40px 6% 80px;
-            background: var(--grad);
-            padding: 40px;
-            border-radius: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-decoration: none;
-            color: black;
-            box-shadow: 0 10px 40px rgba(255, 145, 0, 0.25);
-            transition: 0.3s ease;
+        .f-card {
+            background: white; border: 1px solid #eee; padding: 40px;
+            border-radius: 20px; text-align: center; transition: 0.3s;
         }
-
-        .mega-bar:active {
-            transform: scale(0.97);
-        }
-
-        .mega-bar h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            margin: 0;
-            text-transform: uppercase;
-        }
-
-        .mega-bar p {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-top: 5px;
-            opacity: 0.8;
-        }
-
-        .mega-bar i {
-            font-size: 3rem;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        .f-card:active { transform: scale(0.95); border-color: var(--primary); }
+        .f-card i { font-size: 45px; color: var(--primary); margin-bottom: 20px; }
+        .f-card h3 { font-family: 'Orbitron'; margin-bottom: 10px; }
 
         /* --- FOOTER --- */
         footer {
-            background: #111;
-            padding: 60px 20px;
-            text-align: center;
-            color: white;
+            background: #0a0a0a; color: #666; padding: 60px 20px; text-align: center;
         }
 
-        .socials {
-            display: flex;
-            justify-content: center;
-            gap: 35px;
-            margin-bottom: 30px;
-        }
+        .footer-logo img { height: 70px; border-radius: 50%; border: 2px solid var(--primary); margin-bottom: 20px; }
 
-        .socials a {
-            color: white;
-            font-size: 28px;
-            transition: 0.3s;
-        }
+        .copy-text { font-family: 'Orbitron'; font-size: 12px; letter-spacing: 2px; }
 
-        .socials a:active {
-            color: var(--primary);
-            transform: scale(0.8);
-        }
-
-        .footer-logo img {
-            height: 60px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            border: 2px solid var(--primary);
-        }
-
+        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.8rem; letter-spacing: 5px; }
-            .mega-bar { flex-direction: column; text-align: center; gap: 25px; }
+            .hero h1 { font-size: 2.8rem; }
+            .side-panel { width: 85%; }
+            .section-card { padding: 25px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="doodle-container">
-        <i class="fa-solid fa-gun doodle" style="top: 15%; left: 10%; animation-delay: 0s;"></i>
-        <i class="fa-solid fa-person-rifle doodle" style="top: 40%; right: 15%; animation-delay: 2s;"></i>
-        <i class="fa-solid fa-bomb doodle" style="bottom: 20%; left: 20%; animation-delay: 4s;"></i>
-        <i class="fa-solid fa-suitcase-medical doodle" style="top: 10%; right: 25%; animation-delay: 1s;"></i>
-        <i class="fa-solid fa-burst doodle" style="bottom: 10%; right: 10%; animation-delay: 3s;"></i>
+    <div class="doodle-layer">
+        <i class="fa-solid fa-gun doodle" style="top:10%; left:5%;"></i>
+        <i class="fa-solid fa-bomb doodle" style="top:40%; right:10%; animation-delay: 2s;"></i>
+        <i class="fa-solid fa-person-rifle doodle" style="bottom:20%; left:15%; animation-delay: 4s;"></i>
+        <i class="fa-solid fa-suitcase-medical doodle" style="top:20%; right:20%; animation-delay: 1s;"></i>
+        <i class="fa-solid fa-burst doodle" style="bottom:10%; right:5%; animation-delay: 3s;"></i>
+    </div>
+
+    <div class="menu-overlay" id="overlay"></div>
+    <div class="side-panel" id="sidePanel">
+        <div class="close-btn" id="closeMenu"><i class="fa-solid fa-xmark"></i></div>
+        
+        <p class="menu-section-title">Legal & Info</p>
+        <a href="#tnc" class="menu-item">Terms & Conditions</a>
+        <a href="#fairplay" class="menu-item">Fair Play Policy</a>
+        <a href="#return" class="menu-item">Return & Refund</a>
+
+        <p class="menu-section-title">Support Desk</p>
+        <div class="contact-box">
+            <a href="https://wa.me/918968146117" target="_blank" class="support-link wa-link">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp Support
+            </a>
+            <a href="https://t.me/Akashkohli01" target="_blank" class="support-link tg-link">
+                <i class="fa-brands fa-telegram"></i> Telegram Chat
+            </a>
+        </div>
     </div>
 
     <nav>
-        <div class="logo-box">
+        <div class="nav-logo">
             <img src="https://i.ibb.co/nsfMLgzN/1774105059734.png" alt="Booyah Zone">
         </div>
-        <div class="nav-right">
-            <a href="#" class="get-app-btn">GET APP</a>
-            <div class="hamburger">
+        <div class="nav-btns">
+            <a href="#" class="btn-app">GET APP</a>
+            <div class="hamburger-icon" id="openMenu">
                 <i class="fa-solid fa-bars-staggered"></i>
             </div>
         </div>
     </nav>
 
-    <section class="hero">
+    <header class="hero">
         <h1>BOOYAH ZONE</h1>
-        <p>Elite Free Fire Tournament Hub</p>
-    </section>
+        <p>Official Tournament Arena</p>
+    </header>
 
-    <div class="container">
-        <div class="card">
-            <i class="fa-solid fa-trophy"></i>
-            <h3>DAILY BATTLES</h3>
-            <p>Bhai har din naye matches join karo aur apni skills dikhao. Top players ke liye bada inaam!</p>
+    <div class="main-content">
+        
+        <div class="grid-features">
+            <div class="f-card">
+                <i class="fa-solid fa-trophy"></i>
+                <h3>Elite Matches</h3>
+                <p>Bhai Daily tournaments join karo aur apni skill dikhao. Best rewards wait kar rahe hain.</p>
+            </div>
+            <div class="f-card">
+                <i class="fa-solid fa-user-shield"></i>
+                <h3>Fair Play</h3>
+                <p>Hacker aur Cheaters ke liye yahan koi jagah nahi hai. Pure clean gaming environment.</p>
+            </div>
         </div>
 
-        <div class="card">
-            <i class="fa-solid fa-shield-halved"></i>
-            <h3>FAIR GAMEPLAY</h3>
-            <p>No Hackers, No Emulators. Humara system 24/7 monitor karta hai taaki aapko mile fair experience.</p>
+        <div class="section-card" id="tnc">
+            <h2>TERMS & CONDITIONS</h2>
+            <ul class="policy-list">
+                <li>Booyah Zone ke paas kisi bhi match ko bina kisi reason ke cancel karne ka pura adhikar hai.</li>
+                <li>Match mein participate karne ke liye user ki age 18 saal se zyada honi chahiye.</li>
+                <li>Agar aap match start hone ke baad room join karne ki koshish karte hain, toh aapko entry nahi milega aur na hi refund.</li>
+                <li>Multiple ID use karna sakht mana hai. Agar pakde gaye toh app se permanent ban kar diya jayega.</li>
+                <li>Kisi bhi technical issue ya glitch hone par entry fee refund kar di jayegi ya phir re-match karaya jayega.</li>
+            </ul>
         </div>
+
+        <div class="section-card" id="fairplay">
+            <h2>FAIR PLAY POLICY</h2>
+            <ul class="policy-list">
+                <li>Gameplay mein Mod, Hack ya Script ka istemal bilkul allow nahi hai.</li>
+                <li>Suspicious activity paye jaane par user ka account suspend aur winnings cancel ho sakti hain.</li>
+                <li>Non-emulator matches mein Emulator use karne par kick aur rewards cancel ho sakte hain.</li>
+                <li>Team-up ya unfair gameplay karne par user ka account disable kar diya jayega.</li>
+            </ul>
+            <div class="warning-box">
+                FOUND USING MULTIPLE ID? YOU WILL BE BANNED IMMEDIATELY!
+            </div>
+        </div>
+
+        <div class="section-card" id="return">
+            <h2>RETURN & REFUND POLICY</h2>
+            <ul class="policy-list">
+                <li>Agar match hamari side se cancel hota hai, toh entry fee 100% wallet mein refund hogi.</li>
+                <li>Agar koi player hacker ke dwara mara jata hai (with proof), toh uska joining fee refund hogi.</li>
+                <li>User ek baar match join karne ke baad apni entry cancel nahi kar sakta.</li>
+                <li>Galat details (Game ID/Name) submit karne par koi refund ya reward nahi milega.</li>
+                <li>Internet issue ya phone call aane ki wajah se match miss hone par refund nahi diya jayega.</li>
+            </ul>
+        </div>
+
     </div>
-
-    <a href="#" class="mega-bar">
-        <div class="bar-text">
-            <h2>DOWNLOAD OFFICIAL APP</h2>
-            <p>Available for all Android Devices</p>
-        </div>
-        <i class="fa-solid fa-cloud-arrow-down"></i>
-    </a>
 
     <footer>
         <div class="footer-logo">
             <img src="https://i.ibb.co/nsfMLgzN/1774105059734.png" alt="Booyah Zone">
         </div>
-        <div class="socials">
-            <a href="https://t.me/booyahxzone" target="_blank"><i class="fa-brands fa-telegram"></i></a>
-            <a href="https://wa.me/918968146117" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        </div>
-        <p style="font-family: 'Orbitron'; font-size: 11px; color: #555;">© 2026 BOOYAH ZONE | BORN TO WIN</p>
+        <div class="copy-text">© 2026 BOOYAH ZONE | DESIGNED FOR CHAMPIONS</div>
     </footer>
 
     <script>
-        // Smooth scroll if needed
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        const openBtn = document.getElementById('openMenu');
+        const closeBtn = document.getElementById('closeMenu');
+        const sidePanel = document.getElementById('sidePanel');
+        const overlay = document.getElementById('overlay');
+        const menuLinks = document.querySelectorAll('.menu-item');
+
+        function toggleMenu() {
+            sidePanel.classList.toggle('active');
+            overlay.classList.toggle('active');
+            // Disable scroll when menu is open
+            document.body.style.overflow = sidePanel.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        openBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Smooth scroll to sections and close menu
+        menuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('href');
+                if(targetId.startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+                    toggleMenu();
+                }
             });
         });
     </script>
