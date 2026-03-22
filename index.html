@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Booyah Zone | Elite Tournament Arena</title>
+    <title>Booyah Zone | Official Tournament Hub</title>
 
     <link rel="icon" type="image/png" href="https://i.ibb.co/nsfMLgzN/1774105059734.png">
     <link rel="apple-touch-icon" href="https://i.ibb.co/nsfMLgzN/1774105059734.png">
     <meta property="og:title" content="Booyah Zone">
     <meta property="og:image" content="https://i.ibb.co/nsfMLgzN/1774105059734.png">
-    <meta property="og:description" content="Official Tournament Portal - Born To Win">
+    <meta property="og:description" content="Join Elite Free Fire Tournaments">
     <meta name="theme-color" content="#ff9100">
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -21,12 +21,15 @@
             --secondary: #ffdb00;
             --grad: linear-gradient(135deg, #ff9100 0%, #ffdb00 100%);
             --bg: #ffffff;
-            --card-bg: #ffffff;
-            --text-main: #111111;
-            --shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
-            --hover-shadow: 0 20px 60px rgba(255, 145, 0, 0.25);
+            --card-white: #ffffff;
+            --text-dark: #121212;
+            --text-muted: #666;
+            --glass: rgba(255, 255, 255, 0.98);
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.05);
+            --glow: 0 15px 40px rgba(255, 145, 0, 0.25);
         }
 
+        /* --- BASIC RESET --- */
         * {
             margin: 0; padding: 0; box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -35,223 +38,254 @@
 
         body {
             background: var(--bg);
-            color: var(--text-main);
+            color: var(--text-dark);
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
             line-height: 1.8;
         }
 
-        /* --- ENHANCED DOODLES (Added more) --- */
-        .doodle-layer {
+        /* --- MASSIVE DOODLE SYSTEM --- */
+        .doodle-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; pointer-events: none; opacity: 0.15;
         }
 
         .doodle {
-            position: absolute; color: var(--primary); font-size: 30px;
-            animation: floatRandom 20s infinite linear;
+            position: absolute; color: var(--primary); font-size: 35px;
+            animation: floatingRandom 25s infinite linear;
         }
 
-        @keyframes floatRandom {
+        @keyframes floatingRandom {
             0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            33% { transform: translate(100px, 150px) rotate(120deg) scale(1.2); }
-            66% { transform: translate(-80px, 300px) rotate(240deg) scale(0.8); }
+            25% { transform: translate(80px, 120px) rotate(90deg) scale(1.1); }
+            50% { transform: translate(-40px, 200px) rotate(180deg) scale(0.9); }
+            75% { transform: translate(100px, 50px) rotate(270deg) scale(1.05); }
             100% { transform: translate(0, 0) rotate(360deg) scale(1); }
         }
 
         /* --- NAVIGATION --- */
         nav {
             height: 85px; display: flex; justify-content: space-between; align-items: center;
-            padding: 0 6%; background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 1000;
-            border-bottom: 2px solid #f8f8f8;
+            padding: 0 7%; background: var(--glass); backdrop-filter: blur(15px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid #f2f2f2;
         }
 
-        .logo img {
+        .logo-wrap img {
             height: 60px; width: 60px; border-radius: 50%;
-            border: 3px solid var(--primary); transition: 0.5s;
-            box-shadow: 0 0 15px rgba(255, 145, 0, 0.2);
+            border: 3px solid var(--primary); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 15px rgba(255,145,0,0.2);
         }
-        .logo img:hover { transform: scale(1.1) rotate(360deg); }
+        
+        .logo-wrap img:hover { transform: rotate(360deg) scale(1.15); }
 
-        .nav-right { display: flex; align-items: center; gap: 20px; }
+        .nav-items { display: flex; align-items: center; gap: 20px; }
 
-        .dl-btn {
-            background: var(--grad); color: black; padding: 12px 24px;
+        .btn-get-app {
+            background: var(--grad); color: black; padding: 12px 26px;
             border-radius: 12px; font-family: 'Orbitron'; font-weight: 900;
-            text-decoration: none; font-size: 13px; transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 145, 0, 0.3);
+            text-decoration: none; font-size: 13px; transition: 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255,145,0,0.3);
         }
-        .dl-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(255, 145, 0, 0.4); }
 
-        .hamb-btn { font-size: 28px; color: var(--primary); cursor: pointer; transition: 0.3s; }
-        .hamb-btn:hover { transform: scale(1.1); }
+        .btn-get-app:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,145,0,0.4);
+            filter: brightness(1.1);
+        }
 
-        /* --- SIDE DRAWER --- */
-        .drawer {
+        .menu-trigger { font-size: 30px; color: var(--primary); cursor: pointer; transition: 0.3s; }
+        .menu-trigger:hover { transform: scale(1.1); }
+
+        /* --- SIDE NAVIGATION --- */
+        .side-nav {
             position: fixed; top: 0; right: -100%; width: 320px; height: 100%;
             background: white; z-index: 2500; transition: 0.5s cubic-bezier(0.7, 0, 0.3, 1);
-            padding: 50px 30px; box-shadow: -15px 0 50px rgba(0,0,0,0.1);
+            padding: 60px 30px; box-shadow: -15px 0 50px rgba(0,0,0,0.15);
         }
-        .drawer.active { right: 0; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; display: none; }
-        .overlay.active { display: block; }
-        .close-drawer { position: absolute; top: 20px; right: 25px; font-size: 35px; color: var(--primary); cursor: pointer; }
 
-        .drawer-link {
-            display: block; padding: 15px 0; text-decoration: none; color: #1a1a1a;
-            font-weight: 600; font-size: 16px; border-bottom: 1px solid #f2f2f2; transition: 0.3s;
+        .side-nav.active { right: 0; }
+        .nav-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; display: none; }
+        .nav-overlay.active { display: block; }
+        .close-nav { position: absolute; top: 20px; right: 25px; font-size: 35px; color: var(--primary); cursor: pointer; }
+
+        .nav-link {
+            display: block; padding: 18px 0; text-decoration: none; color: var(--text-dark);
+            font-weight: 700; font-size: 17px; border-bottom: 1px solid #f5f5f5; transition: 0.3s;
         }
-        .drawer-link:hover { color: var(--primary); padding-left: 15px; background: #fffaf0; }
+
+        .nav-link:hover { color: var(--primary); padding-left: 15px; background: #fffaf2; }
 
         /* --- HERO --- */
-        .hero { padding: 80px 20px 40px; text-align: center; }
-        .hero h1 {
-            font-family: 'Orbitron'; font-size: clamp(2.8rem, 10vw, 4.8rem);
+        .hero-section { padding: 80px 20px 40px; text-align: center; }
+
+        .hero-section h1 {
+            font-family: 'Orbitron'; font-size: clamp(2.8rem, 10vw, 4.5rem);
             background: var(--grad); -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; letter-spacing: 5px;
-        }
-        .hero p { font-size: 1rem; color: #999; letter-spacing: 6px; text-transform: uppercase; margin-top: 10px; }
-
-        /* --- CONTENT BLOCKS --- */
-        .main-container { max-width: 1000px; margin: 0 auto; padding: 20px 6% 100px; }
-
-        .policy-card {
-            background: var(--card-bg); border: 1px solid #f0f0f0;
-            padding: 40px; border-radius: 25px; margin-bottom: 45px;
-            box-shadow: var(--shadow); transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            position: relative;
+            -webkit-text-fill-color: transparent; letter-spacing: 6px;
         }
 
-        /* HOVER EFFECT FOR CARDS */
-        .policy-card:hover {
-            transform: translateY(-12px);
+        .hero-section p { font-size: 1.1rem; color: #999; letter-spacing: 5px; text-transform: uppercase; margin-top: 10px; }
+
+        /* --- MAIN CARDS --- */
+        .main-wrapper { max-width: 1000px; margin: 0 auto; padding: 20px 6% 100px; }
+
+        .content-card {
+            background: var(--card-white); border: 1px solid #eee;
+            padding: 45px; border-radius: 30px; margin-bottom: 40px;
+            box-shadow: var(--shadow-soft); transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative; overflow: hidden;
+        }
+
+        /* HOVER EFFECTS FOR CARDS */
+        .content-card:hover {
+            transform: translateY(-15px);
             border-color: var(--primary);
-            box-shadow: var(--hover-shadow);
+            box-shadow: var(--glow);
         }
 
-        .policy-card h2 {
-            font-family: 'Orbitron'; font-size: 1.7rem; color: var(--primary);
-            margin-bottom: 25px; border-bottom: 2px solid #fff5e6; padding-bottom: 10px;
+        .content-card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 6px; height: 100%;
+            background: var(--grad);
         }
 
-        .policy-card p { font-size: 15px; color: #555; margin-bottom: 15px; }
-
-        .list-wrap { list-style: none; }
-        .list-item {
-            position: relative; padding-left: 40px; margin-bottom: 20px;
-            font-size: 15px; color: #333; font-weight: 400;
-        }
-        .list-item i {
-            position: absolute; left: 0; top: 5px; color: var(--primary); font-size: 22px;
+        .content-card h2 {
+            font-family: 'Orbitron'; font-size: 1.8rem; color: var(--primary);
+            margin-bottom: 25px; border-bottom: 2px solid #fff5e6; padding-bottom: 12px;
+            display: flex; align-items: center; gap: 15px;
         }
 
-        .alert-banner {
-            background: #fff0f0; border: 1px dashed #ff4d4d; color: #d00;
-            padding: 18px; border-radius: 15px; font-weight: 800; text-align: center;
-            margin-top: 25px; font-size: 13px; letter-spacing: 1px;
+        .content-card p { font-size: 16px; color: #555; margin-bottom: 20px; }
+
+        .policy-list { list-style: none; }
+        .policy-item {
+            position: relative; padding-left: 45px; margin-bottom: 22px;
+            font-size: 15px; color: #333; font-weight: 400; line-height: 1.6;
         }
 
-        /* --- CONTACT GRID --- */
-        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
-        .support-btn {
-            text-decoration: none; color: white; padding: 16px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            font-weight: 700; transition: 0.3s;
+        .policy-item i {
+            position: absolute; left: 0; top: 4px; color: var(--primary); font-size: 24px;
         }
-        .wa-support { background: #25D366; box-shadow: 0 4px 15px rgba(37,211,102,0.3); }
-        .tg-support { background: #0088cc; box-shadow: 0 4px 15px rgba(0,136,204,0.3); }
-        .support-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+        .warning-msg {
+            background: #fff0f0; border: 1px dashed #ff4d4d; color: #cc0000;
+            padding: 20px; border-radius: 15px; font-weight: 900; text-align: center;
+            margin-top: 30px; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        /* --- SUPPORT BUTTONS --- */
+        .support-flex { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+        
+        .contact-btn {
+            text-decoration: none; color: white; padding: 18px; border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            font-weight: 700; transition: 0.3s; font-size: 15px;
+        }
+
+        .whatsapp-bg { background: #25D366; box-shadow: 0 6px 20px rgba(37,211,102,0.3); }
+        .telegram-bg { background: #0088cc; box-shadow: 0 6px 20px rgba(0,136,204,0.3); }
+        
+        .contact-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
 
         /* --- FOOTER --- */
-        footer { background: #0c0c0c; color: #444; padding: 60px 20px; text-align: center; }
-        .footer-img img { height: 70px; border-radius: 50%; opacity: 0.7; border: 2px solid var(--primary); margin-bottom: 25px; }
-        .footer-tag { font-family: 'Orbitron'; font-size: 11px; letter-spacing: 3px; }
+        footer { background: #0a0a0a; color: #333; padding: 70px 20px; text-align: center; }
+        .footer-logo img { height: 75px; border-radius: 50%; border: 2px solid var(--primary); opacity: 0.8; margin-bottom: 25px; }
+        .footer-text { font-family: 'Orbitron'; font-size: 11px; letter-spacing: 4px; color: #555; }
 
         @media (max-width: 768px) {
-            .drawer { width: 85%; }
-            .contact-grid { grid-template-columns: 1fr; }
-            .policy-card { padding: 30px 20px; }
-            .hero h1 { font-size: 3rem; }
+            .side-nav { width: 85%; }
+            .support-flex { grid-template-columns: 1fr; }
+            .content-card { padding: 35px 25px; }
+            .hero-section h1 { font-size: 3.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="doodle-layer">
-        <i class="fa-solid fa-gun doodle" style="top:5%; left:5%;"></i>
-        <i class="fa-solid fa-crosshairs doodle" style="top:25%; right:10%; animation-delay: 2s;"></i>
-        <i class="fa-solid fa-bomb doodle" style="bottom:15%; left:12%; animation-delay: 4s;"></i>
-        <i class="fa-solid fa-person-rifle doodle" style="top:45%; left:20%; animation-delay: 6s;"></i>
-        <i class="fa-solid fa-suitcase-medical doodle" style="top:15%; right:25%; animation-delay: 1s;"></i>
-        <i class="fa-solid fa-burst doodle" style="bottom:30%; right:15%; animation-delay: 3s;"></i>
-        <i class="fa-solid fa-shield-halved doodle" style="bottom:5%; right:40%; animation-delay: 5s;"></i>
-        <i class="fa-solid fa-trophy doodle" style="top:60%; right:5%; animation-delay: 7s;"></i>
+    <div class="doodle-container">
+        <i class="fa-solid fa-gun doodle" style="top:10%; left:5%;"></i>
+        <i class="fa-solid fa-bomb doodle" style="top:40%; right:12%; animation-delay: 2s;"></i>
+        <i class="fa-solid fa-person-rifle doodle" style="bottom:15%; left:15%; animation-delay: 4s;"></i>
+        <i class="fa-solid fa-suitcase-medical doodle" style="top:25%; right:20%; animation-delay: 1s;"></i>
+        <i class="fa-solid fa-shield-halved doodle" style="bottom:5%; right:45%; animation-delay: 6s;"></i>
+        <i class="fa-solid fa-trophy doodle" style="top:65%; left:8%; animation-delay: 3s;"></i>
+        <i class="fa-solid fa-crosshairs doodle" style="top:15%; right:40%; animation-delay: 5s;"></i>
+        <i class="fa-solid fa-burst doodle" style="bottom:25%; right:10%; animation-delay: 7s;"></i>
     </div>
 
-    <div class="overlay" id="overlay"></div>
-    <div class="drawer" id="drawer">
-        <div class="close-drawer" id="closeDrawer"><i class="fa-solid fa-xmark"></i></div>
-        <p style="font-family:'Orbitron'; font-size:12px; color:#bbb; margin-bottom:25px; letter-spacing:2px;">NAVIGATION</p>
-        <a href="#about" class="drawer-link">About Us</a>
-        <a href="#tnc" class="drawer-link">Terms & Conditions</a>
-        <a href="#fairplay" class="drawer-link">Fair Play Policy</a>
-        <a href="#contact" class="drawer-link">Contact Support</a>
+    <div class="nav-overlay" id="navOverlay"></div>
+    <div class="side-nav" id="sideNav">
+        <div class="close-nav" id="closeNav"><i class="fa-solid fa-xmark"></i></div>
+        <p style="font-family:'Orbitron'; font-size:12px; color:#ccc; margin-bottom:25px; letter-spacing:2px;">BOOYAH ZONE MENU</p>
+        <a href="#about" class="nav-link">About Us</a>
+        <a href="#tnc" class="nav-link">Terms & Conditions</a>
+        <a href="#fairplay" class="nav-link">Fair Play Policy</a>
+        <a href="#refund" class="nav-link">Refund Policy</a>
+        <a href="#contact" class="nav-link">Contact Support</a>
     </div>
 
     <nav>
-        <div class="logo">
+        <div class="logo-wrap">
             <img src="https://i.ibb.co/nsfMLgzN/1774105059734.png" alt="Booyah Zone Logo">
         </div>
-        <div class="nav-right">
-            <a href="#" class="dl-btn">DOWNLOAD APP</a>
-            <div class="hamb-btn" id="openDrawer"><i class="fa-solid fa-bars-staggered"></i></div>
+        <div class="nav-items">
+            <a href="#" class="btn-get-app">DOWNLOAD</a>
+            <div class="menu-trigger" id="openNav"><i class="fa-solid fa-bars-staggered"></i></div>
         </div>
     </nav>
 
-    <header class="hero">
+    <header class="hero-section">
         <h1>BOOYAH ZONE</h1>
-        <p>Elite Esports Hub | Born To Win</p>
+        <p>BORN TO WIN | OFFICIAL PORTAL</p>
     </header>
 
-    <div class="main-container">
+    <div class="main-wrapper">
 
-        <div class="policy-card" id="about">
-            <h2>About Booyah Zone</h2>
-            <p>Welcome to <strong>Booyah Zone</strong>, India's premier destination for competitive mobile gaming. We are dedicated to providing a professional platform where skill meets opportunity. Our focus is on transparency, security, and the ultimate gaming experience.</p>
-            <p>Join thousands of players in daily tournaments, climb the leaderboards, and prove you have what it takes to be a champion.</p>
+        <div class="content-card" id="about">
+            <h2><i class="fa-solid fa-circle-info"></i> About Booyah Zone</h2>
+            <p>Welcome to <strong>Booyah Zone</strong>, India's most trusted esports platform for Free Fire enthusiasts. We offer a professional arena where survivors can test their skills, compete with the best, and earn legendary rewards.</p>
+            <p>Our goal is to build a secure and fair gaming ecosystem for every competitive player out there.</p>
         </div>
 
-        <div class="policy-card" id="tnc">
-            <h2>Terms & Conditions</h2>
-            <div class="list-wrap">
-                <div class="list-item"><i class="fa-solid fa-check-circle"></i> Booyah Zone reserves the absolute right to cancel or reschedule any match without prior notice.</div>
-                <div class="list-item"><i class="fa-solid fa-check-circle"></i> Participants must be 18 years of age or older to enter paid matches.</div>
-                <div class="list-item"><i class="fa-solid fa-check-circle"></i> 100% refund is processed only if a match is cancelled due to technical issues on our end.</div>
-                <div class="list-item"><i class="fa-solid fa-check-circle"></i> Users are responsible for joining the room before the match start time; no refunds for late entries.</div>
-                <div class="list-item"><i class="fa-solid fa-check-circle"></i> Using multiple accounts to play the same match is strictly prohibited and leads to a ban.</div>
+        <div class="content-card" id="tnc">
+            <h2><i class="fa-solid fa-file-contract"></i> Terms & Conditions</h2>
+            <div class="policy-list">
+                <div class="policy-item"><i class="fa-solid fa-check-double"></i> Booyah Zone reserves the right to cancel any match without prior notice or reason.</div>
+                <div class="policy-item"><i class="fa-solid fa-check-double"></i> All players must be at least 18 years old to join any paid tournaments.</div>
+                <div class="policy-item"><i class="fa-solid fa-check-double"></i> Room ID and Password will be provided via App. It is your duty to join before the start time.</div>
+                <div class="policy-item"><i class="fa-solid fa-check-double"></i> Using multiple accounts to participate in the same match is strictly prohibited.</div>
+                <div class="policy-item"><i class="fa-solid fa-check-double"></i> Any player sharing Room details outside the app will be banned instantly.</div>
             </div>
         </div>
 
-        <div class="policy-card" id="fairplay">
-            <h2>Fair Play Policy (FIR)</h2>
-            <div class="list-wrap">
-                <div class="list-item"><i class="fa-solid fa-user-shield"></i> Use of Hacks, Mods, Scripts, or any Third-Party tools will result in a permanent hardware ban.</div>
-                <div class="list-item"><i class="fa-solid fa-user-shield"></i> Emulator players are not allowed in mobile-only matches. Detection will lead to an immediate kick.</div>
-                <div class="list-item"><i class="fa-solid fa-user-shield"></i> Teaming up with opponents or exploiting in-game glitches is a serious violation.</div>
-                <div class="list-item"><i class="fa-solid fa-user-shield"></i> All matches are live-monitored by our professional anti-cheat spectating team.</div>
+        <div class="content-card" id="fairplay">
+            <h2><i class="fa-solid fa-user-shield"></i> Fair Play (FIR)</h2>
+            <div class="policy-list">
+                <div class="policy-item"><i class="fa-solid fa-ban"></i> Use of Mods, Hacks, Scripts, or Third-Party apps is strictly forbidden.</div>
+                <div class="policy-item"><i class="fa-solid fa-ban"></i> Teaming with enemies or exploiting game glitches will result in disqualification.</div>
+                <div class="policy-item"><i class="fa-solid fa-ban"></i> Emulator players are not allowed in mobile tournaments. System detection will lead to a kick.</div>
+                <div class="policy-item"><i class="fa-solid fa-ban"></i> All matches are live-monitored by our expert anti-cheat spectating team.</div>
             </div>
-            <div class="alert-banner">STRICT WARNING: MULTIPLE ID USAGE = INSTANT PERMANENT BAN</div>
+            <div class="warning-msg">Strict Alert: Multiple IDs = Permanent Ban from Platform</div>
         </div>
 
-        <div class="policy-card" id="contact">
-            <h2>Contact Support</h2>
-            <p>Facing a problem? Our support team is available 24/7 to resolve match disputes, payment queries, or account issues.</p>
-            <div class="contact-grid">
-                <a href="https://wa.me/918968146117" target="_blank" class="support-btn wa-support">
+        <div class="content-card" id="refund">
+            <h2><i class="fa-solid fa-rotate-left"></i> Refund Policy</h2>
+            <div class="policy-list">
+                <div class="policy-item"><i class="fa-solid fa-hand-holding-dollar"></i> 100% Entry Fee refund if the match is cancelled by our management team.</div>
+                <div class="policy-item"><i class="fa-solid fa-hand-holding-dollar"></i> No refund will be provided if you fail to enter the room before the match starts.</div>
+                <div class="policy-item"><i class="fa-solid fa-hand-holding-dollar"></i> If you are killed by a proven hacker, your entry fee will be refunded to the wallet.</div>
+                <div class="policy-item"><i class="fa-solid fa-hand-holding-dollar"></i> Refunds are credited only to the App Wallet; no direct bank transfers.</div>
+            </div>
+        </div>
+
+        <div class="content-card" id="contact">
+            <h2><i class="fa-solid fa-headset"></i> Contact Support</h2>
+            <p>Facing technical issues or have a query? Our 24/7 support experts are here to help you via WhatsApp and Telegram.</p>
+            <div class="support-flex">
+                <a href="https://wa.me/918968146117" target="_blank" class="contact-btn whatsapp-bg">
                     <i class="fa-brands fa-whatsapp"></i> WhatsApp Help
                 </a>
-                <a href="https://t.me/Akashkohli01" target="_blank" class="support-btn tg-support">
+                <a href="https://t.me/Akashkohli01" target="_blank" class="contact-btn telegram-bg">
                     <i class="fa-brands fa-telegram"></i> Telegram Help
                 </a>
             </div>
@@ -260,35 +294,35 @@
     </div>
 
     <footer>
-        <div class="footer-img">
+        <div class="footer-logo">
             <img src="https://i.ibb.co/nsfMLgzN/1774105059734.png" alt="Booyah Zone">
         </div>
-        <p class="footer-tag">© 2026 BOOYAH ZONE | DESIGNED FOR CHAMPIONS</p>
+        <p class="footer-text">© 2026 BOOYAH ZONE | BUILT FOR LEGENDS</p>
     </footer>
 
     <script>
-        const openBtn = document.getElementById('openDrawer');
-        const closeBtn = document.getElementById('closeDrawer');
-        const drawer = document.getElementById('drawer');
-        const overlay = document.getElementById('overlay');
+        const openBtn = document.getElementById('openNav');
+        const closeBtn = document.getElementById('closeNav');
+        const sideNav = document.getElementById('sideNav');
+        const overlay = document.getElementById('navOverlay');
 
-        function toggle() {
-            drawer.classList.toggle('active');
+        function toggleNav() {
+            sideNav.classList.toggle('active');
             overlay.classList.toggle('active');
-            document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : 'auto';
+            document.body.style.overflow = sideNav.classList.contains('active') ? 'hidden' : 'auto';
         }
 
-        openBtn.addEventListener('click', toggle);
-        closeBtn.addEventListener('click', toggle);
-        overlay.addEventListener('click', toggle);
+        openBtn.addEventListener('click', toggleNav);
+        closeBtn.addEventListener('click', toggleNav);
+        overlay.addEventListener('click', toggleNav);
 
-        // Close drawer when a link is clicked
-        document.querySelectorAll('.drawer-link').forEach(link => {
-            link.addEventListener('click', toggle);
+        // Smooth closing when a link is clicked
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', toggleNav);
         });
 
-        // Add a smooth touch feedback for mobile
-        document.addEventListener('touchstart', function() {}, {passive: true});
+        // Feedback for mobile touches
+        document.addEventListener('touchstart', function(){}, {passive: true});
     </script>
 
 </body>
